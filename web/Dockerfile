@@ -3,10 +3,11 @@ FROM node:22-alpine AS build
 
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
+# pnpm-workspace.yaml holds the allowBuilds list pnpm 11 needs to run install scripts
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
-# Install pnpm
-RUN npm install -g pnpm
+# Install pnpm (same version as CI)
+RUN npm install -g pnpm@11.11.0
 
 RUN pnpm install
 
